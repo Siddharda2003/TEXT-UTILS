@@ -1,16 +1,16 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import Navbar from './components/Navbar';
 import Textform from './components/Textform';
-import Aboutus from './components/Aboutus';
+// import Aboutus from './components/Aboutus';
 import React,{useState} from 'react'
 import Alerts from './components/Alerts';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
+// import {
+//   BrowserRouter as Router,
+//   Routes,
+//   Route,
+//   Link
+// } from "react-router-dom";
 function App() {
   const[mode,setMode]=useState('light')
   const[alert,setAlert]=useState(null)
