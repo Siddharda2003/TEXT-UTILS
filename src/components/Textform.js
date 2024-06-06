@@ -30,6 +30,7 @@ export default function Textform(props) {
     var textArea=document.getElementById("text-box")
     textArea.select()
     navigator.clipboard.writeText(textArea.value);
+    document.getSelection().removeAllRanges()
     props.showAlert("Text copied","success")
   }
   const onHandlePaste = async () =>{
@@ -51,25 +52,29 @@ export default function Textform(props) {
   return (
     <>
     <div style={{color:(props.mode==='light')?'black':'white'}}>
-      <h1>{props.heading}</h1>
+      <h2 className='mb-3'>{props.heading}</h2>
       <div className="mb-3" >
-        <textarea className="form-control" value={text} style={{backgroundColor:(props.mode==='light')?'grey':'white',color:(props.mode==='light')?'white':'black'}}  onChange={onHandleChange} id="text-box" rows="8"></textarea>
+        <textarea className="form-control" value={text} style={{backgroundColor:(props.mode==='light')?'#13466e':'white',color:(props.mode==='light')?'white':'black'}}  onChange={onHandleChange} id="text-box" rows="8"></textarea>
       </div>
-      <button className="btn btn-primary mx-1 my-1" onClick={onHandleUpper}>Convert to Uppercase</button>
-      <button className="btn btn-primary mx-1 my-1" onClick={onHandleLower}>Convert to Lowercase</button>
-      <button className="btn btn-primary mx-1 my-1" onClick={onHandleClear}>Clear Text</button>
-      <button className="btn btn-primary mx-1 my-1" onClick={onHandleCopy}>Copy Text</button>
-      <button className="btn btn-primary mx-1 my-1" onClick={onHandlePaste}>Paste Text</button>
-      <button className="btn btn-primary mx-1 my-1" onClick={onHandleRemove}>Remove Extra Space</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={onHandleUpper}>Convert to Uppercase</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={onHandleLower}>Convert to Lowercase</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={onHandleClear}>Clear Text</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={onHandleCopy}>Copy Text</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={onHandlePaste}>Paste Text</button>
+      <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={onHandleRemove}>Remove Extra Space</button>
     </div>
     <div className="container my-3" style={{color:(props.mode==='light')?'black':'white'}}>
         <h2>Your text summary:</h2>
         <ul>
-           <li>Number of words:{text.length===0?0 :text.trim().split(" ").length}</li>
+           <li>Number of words:{text.split(/\s+/).filter((element)=>{
+            return element.length!==0
+           }).length}</li>
            <li>Number of characters:{text.length}</li>
-           <li>{text.length===0?0 :text.trim().split(" ").length*0.008} Minutes read</li>
+           <li>{text.split(/\s+/).filter((element)=>{
+            return element.length!==0
+           }).length*0.008} Minutes read</li>
            <li><h6>Preview:</h6>
-           <p>{text.length>0?text:"Enter some text to preview it. "}</p>
+           <p>{text.length>0?text:"Nothing to preview. "}</p>
            </li>
         </ul>
     </div>
